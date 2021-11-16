@@ -76,7 +76,7 @@ def login():
             login_user(user)
             if(int(user.types)==1):
                 print("ADMIN")
-                return redirect('admin')#NEEDS TO BE IMPLEMENTED
+                return redirect('admin')
             if(int(user.types)==2):
                 print("STUDENT")
                 return redirect("student")#NEEDS TO BE IMPLEMENTED
