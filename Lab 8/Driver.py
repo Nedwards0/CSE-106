@@ -12,7 +12,7 @@ app.secret_key = 'ASDASDDASDSAFA'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.sqlite3'
 db = SQLAlchemy(app)
-
+login=LoginManager(app)
 
 class User(UserMixin,db.Model):
     id=db.Column(db.Integer,primary_key=True)
@@ -27,7 +27,6 @@ class User(UserMixin,db.Model):
         self.types=type
     def get_pass(self, password):
         return self.password == password
-
 class Classes(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     teacher_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
@@ -35,15 +34,25 @@ class Classes(db.Model):
     enrolled=db.Column(db.Integer)
     maxenrolled=db.Column(db.Integer)
     type = db.Column(db.Integer, nullable = False)
-
 class Enroll(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
     class_id = db.Column(db.Integer, db.ForeignKey('classes.id'),nullable=False)
     enrolled=db.Column(db.Integer)
 
+@login.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
+
+class adminview(ModelView):
+    def is_accessible(self):
+        return False
+class studentview(ModelView):
+    pass
+class Teacherview(ModelView):
+    pass
 admin=Admin(app)
-admin.add_view(ModelView(User,db.session))
+admin.add_view(adminview(User,db.session))
 
 
 @app.route('/login',methods=['GET','POST'])
