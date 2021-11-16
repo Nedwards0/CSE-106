@@ -48,7 +48,17 @@ def login():
     try:
         user=User.query.filter_by(username=user).first()
         if(user.password==passs):
-            print("LOGIN SUCUESS")
+            if(user.types==1):
+                print("ADMIN")
+                    #ROUTE TO ADMIN PAGE
+            if(user.types==2):
+                print("STUDENT")
+                    #ROUTE TO STUDENT
+            if(user.types==3):
+                print("TEACHER")
+                    #ROUTE TO TEACHER PAGE
+
+
         else:
             print("FAIL")
     except:
