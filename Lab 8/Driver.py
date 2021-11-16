@@ -8,10 +8,6 @@ app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.sqlite3'
 db = SQLAlchemy(app)
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = 'login'
-app.secret_key = 'mypassword'
 
 class User(UserMixin,db.Model):
     id=db.Column(db.Integer,primary_key=True)
@@ -39,25 +35,8 @@ class Enroll(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
     class_id = db.Column(db.Integer, db.ForeignKey('classes.id'),nullable=False)
-    grade = db.Column('Grade', db.String, nullable = False) # Needs grade?
+    enrolled=db.Column(db.Integer)
 
-class Students(db.Model):
-    id = db.Column(db.Integer, nullable = False, primary_key = True)
-    f_Name = db.Column(db.String, nullable= False)
-    l_Name = db.Column(db.string, nullable = False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
-    class_id = db.Relationship('Classes', secondary = 'enroll')
-
-# https://stackoverflow.com/questions/44538911/flask-sqlalchemy-backref-function-and-backref-parameter
-class Teachers(db.Model):
-    id = db.Column(db.Integer, nullable = False, primary_key = True)
-    f_Name = db.Column(db.String, nullable= False)
-    l_Name = db.Column(db.string, nullable = False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
-    class_id = db.Relationship('Classes', backref = db.backref('Classes', lazy = True))
-
-db.create_all()
-db.session.commit()
 
 
 
@@ -74,8 +53,6 @@ def login():
             print("FAIL")
     except:
         print("User does not exist")
-    ##THIS NEEDS QUERY THE DATABASE FOR THE USER AND PASSWORD
-    #LOG THIS INTO A USER SESSIONS
     return render_template("login.html")
     
 
