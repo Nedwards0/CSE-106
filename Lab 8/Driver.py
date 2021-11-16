@@ -13,7 +13,6 @@ app.secret_key = 'ASDASDDASDSAFA'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.sqlite3'
 db = SQLAlchemy(app)
 login=LoginManager(app)
-
 class User(UserMixin,db.Model):
     id=db.Column(db.Integer,primary_key=True)
     username=db.Column(db.String(30),unique=True)
@@ -46,13 +45,22 @@ def load_user(user_id):
 
 class adminview(ModelView):
     def is_accessible(self):
-        return False
+        print(current_user.types)
+        if(int(current_user.types)==1):
+            print("TRUE")
+            return current_user.is_authenticated
+        else:
+            return False
+    def inaccessible_callback(self, name, **kwargs):
+        return redirect("login")
 class studentview(ModelView):
     pass
 class Teacherview(ModelView):
     pass
 admin=Admin(app)
 admin.add_view(adminview(User,db.session))
+admin.add_view(adminview(Classes,db.session))
+admin.add_view(adminview(Enroll,db.session))
 
 
 @app.route('/login',methods=['GET','POST'])
@@ -69,10 +77,10 @@ def login():
             if(int(user.types)==1):
                 print("ADMIN")
                 return redirect('admin')#NEEDS TO BE IMPLEMENTED
-            if(user.types==2):
+            if(int(user.types)==2):
                 print("STUDENT")
                 return redirect("student")#NEEDS TO BE IMPLEMENTED
-            if(user.types==3):
+            if(int(user.types)==3):
                 print("TEACHER")
                 return redirect("teacher")#NEEDS TO BE IMPLEMENTED
             
