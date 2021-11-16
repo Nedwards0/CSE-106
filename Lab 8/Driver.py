@@ -3,12 +3,16 @@ from flask import Flask, request, render_template,jsonify,session,redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin
 from flask_login import login_required, logout_user, login_user, current_user
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
+
 
 app = Flask(__name__) 
 app.secret_key = 'ASDASDDASDSAFA'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.sqlite3'
 db = SQLAlchemy(app)
+
 
 class User(UserMixin,db.Model):
     id=db.Column(db.Integer,primary_key=True)
@@ -38,8 +42,8 @@ class Enroll(db.Model):
     class_id = db.Column(db.Integer, db.ForeignKey('classes.id'),nullable=False)
     enrolled=db.Column(db.Integer)
 
-
-
+admin=Admin(app)
+admin.add_view(ModelView(User,db.session))
 
 
 @app.route('/login',methods=['GET','POST'])
@@ -52,7 +56,7 @@ def login():
         user=User.query.filter_by(username=user).first()
         if(user.password==passs):
             print(user.types)
-            session['user_id'] = user.id
+            login_user(user)
             if(int(user.types)==1):
                 print("ADMIN")
                 return redirect('admin')#NEEDS TO BE IMPLEMENTED
