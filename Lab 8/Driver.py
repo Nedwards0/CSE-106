@@ -1,10 +1,11 @@
 
-from flask import Flask, request, render_template,jsonify
+from flask import Flask, request, render_template,jsonify,session
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin
 from flask_login import login_required, logout_user, login_user, current_user
 
 app = Flask(__name__) 
+app.secret_key = 'ASDASDDASDSAFA'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.sqlite3'
 db = SQLAlchemy(app)
@@ -46,7 +47,8 @@ def login():
     if(request.method=="POST"):
         user=request.form['username']
         passs=request.form['password']
-    try:
+    #try:
+        session.pop('user_id', None)
         user=User.query.filter_by(username=user).first()
         if(user.password==passs):
             print(user.types)
@@ -62,7 +64,7 @@ def login():
 
         else:
             print("FAIL")
-    except:
+    #except:
         print("User does not exist")
     return render_template("login.html")
 
