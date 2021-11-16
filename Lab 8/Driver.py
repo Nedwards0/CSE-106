@@ -13,7 +13,7 @@ class User(UserMixin,db.Model):
     id=db.Column(db.Integer,primary_key=True)
     username=db.Column(db.String(30),unique=True)
     name=db.Column(db.String(30))
-    passwrod=db.Column(db.String(30))
+    password=db.Column(db.String(30))
     types=db.Column(db.String(30))
     def __init__(self, username, password,name,type):
         self.username = username
@@ -45,6 +45,8 @@ def login():
         username=request.form['username']
         password=request.form['password']
         print(username,password)
+    ##THIS NEEDS QUERY THE DATABASE FOR THE USER AND PASSWORD
+    #LOG THIS INTO A USER SESSIONS
     return render_template("login.html")
     
 
