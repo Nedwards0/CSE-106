@@ -1,5 +1,5 @@
 
-from flask import Flask, request, render_template,jsonify,session
+from flask import Flask, request, render_template,jsonify,session,redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin
 from flask_login import login_required, logout_user, login_user, current_user
@@ -47,24 +47,26 @@ def login():
     if(request.method=="POST"):
         user=request.form['username']
         passs=request.form['password']
-    #try:
+    try:
         session.pop('user_id', None)
         user=User.query.filter_by(username=user).first()
         if(user.password==passs):
             print(user.types)
+            session['user_id'] = user.id
             if(int(user.types)==1):
                 print("ADMIN")
-                #ROUTE TO ADMIN
+                return redirect('admin')#NEEDS TO BE IMPLEMENTED
             if(user.types==2):
                 print("STUDENT")
-                    #ROUTE TO STUDENT
+                return redirect("student")#NEEDS TO BE IMPLEMENTED
             if(user.types==3):
                 print("TEACHER")
-                    #ROUTE TO TEACHER PAGE
+                return redirect("teacher")#NEEDS TO BE IMPLEMENTED
+            
 
         else:
             print("FAIL")
-    #except:
+    except:
         print("User does not exist")
     return render_template("login.html")
 
