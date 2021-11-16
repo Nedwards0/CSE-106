@@ -42,9 +42,16 @@ class Enroll(db.Model):
 @app.route('/login',methods=['GET','POST'])
 def login():
     if(request.method=="POST"):
-        username=request.form['username']
-        password=request.form['password']
-        print(username,password)
+        user=request.form['username']
+        passs=request.form['password']
+    try:
+        user=User.query.filter_by(username=user).first()
+        if(user.password==passs):
+            print("LOGIN SUCUESS")
+        else:
+            print("FAIL")
+    except:
+        print("User does not exist")
     ##THIS NEEDS QUERY THE DATABASE FOR THE USER AND PASSWORD
     #LOG THIS INTO A USER SESSIONS
     return render_template("login.html")
