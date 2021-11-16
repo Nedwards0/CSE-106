@@ -40,6 +40,7 @@ class Enroll(db.Model):
 
 
 
+
 @app.route('/login',methods=['GET','POST'])
 def login():
     if(request.method=="POST"):
@@ -48,9 +49,10 @@ def login():
     try:
         user=User.query.filter_by(username=user).first()
         if(user.password==passs):
-            if(user.types==1):
+            print(user.types)
+            if(int(user.types)==1):
                 print("ADMIN")
-                    #ROUTE TO ADMIN PAGE
+                #ROUTE TO ADMIN
             if(user.types==2):
                 print("STUDENT")
                     #ROUTE TO STUDENT
@@ -58,13 +60,12 @@ def login():
                 print("TEACHER")
                     #ROUTE TO TEACHER PAGE
 
-
         else:
             print("FAIL")
     except:
         print("User does not exist")
     return render_template("login.html")
-    
+
 
 if __name__ == '__main__':
     app.debug = True
