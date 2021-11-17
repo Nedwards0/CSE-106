@@ -72,6 +72,7 @@ def login():
         session.pop('user_id', None)
         user=User.query.filter_by(username=user).first()
         if(user.password==passs):
+            session['user_id'] = user.id
             print(user.types)
             login_user(user)
             if(int(user.types)==1):
@@ -93,6 +94,9 @@ def login():
 @app.route('/student',methods=['GET'])
 def student():
     if(request.method=='GET'):
+        session_id = session['user_id']
+        user_id = Enroll.query.filter_by(user_id = session_id).all()
+        print(user_id)
         return render_template("student.html")
 
 @app.route('/teacher',methods=['GET'])
