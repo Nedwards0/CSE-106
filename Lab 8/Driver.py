@@ -163,7 +163,8 @@ def add_todb(class_id):
 @app.route('/student/add_class/<string:class_id>')
 def proff_classez(class_id):
     print(class_id)
-    c=Classes.query.get(class_id)
+
+    c=Classes.query.filter_by(name=class_id)
     a=[{'id':c.id},{'name':c.name},{'enrolled':c.enrolled},{'max':c.maxenrolled}]
     return (jsonify(a))
 
