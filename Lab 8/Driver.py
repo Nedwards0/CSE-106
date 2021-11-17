@@ -90,13 +90,39 @@ def login():
         print("User does not exist")
     return render_template("login.html")
 
+class classes():
+    grade=0
+    teacher='0'
+    name=''
+    time=''
+    enrolled=''
+    max_enrolled=''
+    def __init__(self,grade,teacher,name,enrolled,max_enrolled):
+        self.grade=grade
+        self.teacher=teacher
+        self.name=name
+        self.enrolled=enrolled
+        self.max_enrolled=max_enrolled
+
+
 
 @app.route('/student',methods=['GET'])
 def student():
     if(request.method=='GET'):
         session_id = session['user_id']
         user_id = Enroll.query.filter_by(user_id = session_id).all()
-        print(user_id)
+        grades=[]
+        class_id=[]
+        stud_class=[]
+        for enroll in user_id:
+            class_id.append(enroll.class_id)
+            grades.append(enroll.enrolled) 
+        for i,clas in enumerate(class_id):
+            c=Classes.query.filter_by(id=clas).first()
+            teacher=User.query.filter_by(id=c.teacher_id).first()
+            teacher=teacher.name
+            cure_classes=classes(grades[i],teacher,c.name,c.enrolled,c.maxenrolled)
+            stud_class.append(cure_classes)
         return render_template("student.html")
 
 @app.route('/teacher',methods=['GET'])
