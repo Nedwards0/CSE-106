@@ -26,6 +26,7 @@ const logout = async () => {
 
 const add = async (class_name) => {
     const response = await fetch(URI + "student/g/" + class_name);
+    window.location.replace(URI + "student");
 };
 
 const populateEnrolled = async () => {

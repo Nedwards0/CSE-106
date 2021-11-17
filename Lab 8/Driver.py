@@ -157,13 +157,25 @@ def proff_classe(class_id):
 @app.route('/student/g/<string:class_id>')
 def add_todb(class_id):
     class_id=3
+    try:
+        c=Enroll.query.filter_by(user_id=session['user_id'])
+        for k in c:
+            if k.class_id==class_id:
+                print(k)
+                clas=Classes.query.filter_by(id=class_id).first()
+                clas.enrolled=clas.enrolled-1
+                db.session.delete(k)
+                db.session.commit()
+                return "s"
+    except:
+        pass
+    print("AAAA")
     c=Enroll.query.filter_by(class_id=class_id).first()
     clas=Classes.query.filter_by(id=class_id).first()
     clas.enrolled=clas.enrolled+1
     class_id=c.class_id
     enroll=Enroll(user_id=session['user_id'],class_id=class_id,enrolled=99)
     db.session.add(enroll)
-    
     db.session.commit()
     return "s"
 @app.route('/student/add_class/<string:class_id>')
