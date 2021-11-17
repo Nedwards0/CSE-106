@@ -18,7 +18,7 @@ function openPage(pageName, elmnt, color) {
 // Get the element with id="defaultOpen" and click on it
 document.getElementById("defaultOpen").click();
 
-const logout = async () => {
+const logout = async (class_id) => {
 	const response = await fetch(URI + "logout");
 	window.location.replace(URI + "login");
 	//const myJson = await response.json();
@@ -133,7 +133,7 @@ const populateCourses = async () => {
                 "/" +
                 element[3].max_enrolled +
                 "</td><td>" +
-                "<button class='edit-button' onclick='add()'  > add </button>" +
+                "<button class='edit-button' onclick='add()'> add </button>" +
                 "</td></tr>"
             );
         } else {

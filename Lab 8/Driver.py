@@ -155,8 +155,6 @@ def proff_classe(class_id):
         outs.append(a)
     return (jsonify(outs))
 
-<<<<<<< HEAD
-=======
 #class add class to student 
 @app.route('/student/add_class/<string:class_id>')
 def proff_classez(class_id):
@@ -164,9 +162,6 @@ def proff_classez(class_id):
     c=Classes.query.get(class_id)
     a=[{'id':c.id},{'name':c.name},{'enrolled':c.enrolled},{'max':c.maxenrolled}]
     return (jsonify(a))
-    
-    
->>>>>>> 86a7a01775fdbe10b2832c5660c2be97b29882d9
 
 @app.route('/teacher',methods=['GET'])
 def teacher():
