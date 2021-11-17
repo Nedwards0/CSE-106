@@ -154,7 +154,11 @@ def proff_classe(class_id):
         a=[{'stud_id':user.id},{'name':user.name},{"grade":k.enrolled},{"class_id":class_id}]
         outs.append(a)
     return (jsonify(outs))
-
+@app.route('/student/g/<class_id>')
+def add_todb(class_id):
+    enroll=Enroll(user_id=session['user_id'],class_id=class_id)
+    db.session.add(enroll)
+    db.session.commit()
 #class add class to student 
 @app.route('/student/add_class/<string:class_id>')
 def proff_classez(class_id):
