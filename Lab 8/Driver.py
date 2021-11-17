@@ -154,14 +154,18 @@ def proff_classe(class_id):
         a=[{'stud_id':user.id},{'name':user.name},{"grade":k.enrolled},{"class_id":class_id}]
         outs.append(a)
     return (jsonify(outs))
-@app.route('/student/g/<class_id>')
+@app.route('/student/g/<string:class_id>')
 def add_todb(class_id):
-    c=Enroll.query.filter_by(name=class_id).first()
+    class_id=3
+    c=Enroll.query.filter_by(class_id=class_id).first()
+    clas=Classes.query.filter_by(id=class_id).first()
+    clas.enrolled=clas.enrolled+1
     class_id=c.class_id
-    enroll=Enroll(user_id=session['user_id'],class_id=class_id)
+    enroll=Enroll(user_id=session['user_id'],class_id=class_id,enrolled=99)
     db.session.add(enroll)
+    
     db.session.commit()
-#class add class to student 
+    return "s"
 @app.route('/student/add_class/<string:class_id>')
 def proff_classez(class_id):
     print(class_id)
