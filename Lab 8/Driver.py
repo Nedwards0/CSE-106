@@ -90,19 +90,6 @@ def login():
         print("User does not exist")
     return render_template("login.html")
 
-class classes():
-    grade=0
-    teacher='0'
-    name=''
-    time=''
-    enrolled=''
-    max_enrolled=''
-    def __init__(self,grade,teacher,name,enrolled,max_enrolled):
-        self.grade=grade
-        self.teacher=teacher
-        self.name=name
-        self.enrolled=enrolled
-        self.max_enrolled=max_enrolled
 
 @app.route('/student',methods=['GET'])
 def student():
@@ -143,11 +130,25 @@ def all_classes():
 #return list of classes 
 @app.route('/teacher/classes')
 def proff_classes():
+    session_id = session['user_id']
+    q=Classes.query.filter_by(teacher_id=session_id).all()
+    b=[]
+    print(q)
+    for c in q:
+        a=[{'class_id':c.id},{'class_name':  c.name},{'enrolled': c.enrolled},{'max_enrolled': c.maxenrolled}]
+        b.append(a)
+    print(b)
+    return(jsonify(b))
 
 
 #class object with all class info
 @app.route('/teacher/<string:class_id>')
-def proff_classes(class_id):
+def proff_classe(class_id):
+    print(class_id)
+    c=Classes.query.get(class_id)
+    a=[{'id':c.id},{'name':c.name},{'enrolled':c.enrolled},{'max':c.maxenrolled}]
+    return (jsonify(a))
+
 
 
 
