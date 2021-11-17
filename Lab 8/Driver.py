@@ -104,8 +104,6 @@ class classes():
         self.enrolled=enrolled
         self.max_enrolled=max_enrolled
 
-
-
 @app.route('/student',methods=['GET'])
 def student():
     if(request.method=='GET'):
@@ -141,6 +139,18 @@ def all_classes():
         a=[{'teacher': teacher},{'class_name':  c.name},{'enrolled': c.enrolled},{'max_enrolled': c.maxenrolled}]
         all_classes.append(a)
     return(jsonify(all_classes))
+
+#return list of classes 
+@app.route('/teacher/classes')
+def proff_classes():
+
+
+#class object with all class info
+@app.route('/teacher/<string:class_id>')
+def proff_classes(class_id):
+
+
+
 
     
 
