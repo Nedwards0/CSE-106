@@ -132,9 +132,15 @@ def return_data():
 
 @app.route('/student/classes')
 def all_classes():
-
-    return jsonify(data)
-
+    session_id = session['user_id']
+    all_classes=[]
+    test=Classes.query.all()
+    for c in test:
+        teacher=User.query.filter_by(id=c.teacher_id).first()
+        teacher=teacher.name
+        a=[{'teacher': teacher},{'class_name':  c.name},{'enrolled': c.enrolled},{'max_enrolled': c.maxenrolled}]
+        all_classes.append(a)
+    return(jsonify(all_classes))
 
     
 

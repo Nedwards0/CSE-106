@@ -20,7 +20,7 @@ document.getElementById("defaultOpen").click();
 
 
 const test = async () => {
-    const response = await fetch(URI + "student/data");
+    const response = await fetch(URI + "student/classes");
 		const myJson = await response.json();
 
 		console.log(myJson);
