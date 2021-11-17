@@ -17,3 +17,14 @@ function openPage(pageName, elmnt, color) {
 }
 // Get the element with id="defaultOpen" and click on it
 document.getElementById("defaultOpen").click();
+
+
+const test = async () => {
+    const response = await fetch(URI + "student/data");
+		const myJson = await response.json();
+
+		console.log(myJson);
+ }
+
+
+ URI = 'http://127.0.0.1:5000/'

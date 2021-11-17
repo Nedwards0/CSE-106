@@ -109,21 +109,29 @@ class classes():
 @app.route('/student',methods=['GET'])
 def student():
     if(request.method=='GET'):
-        session_id = session['user_id']
-        user_id = Enroll.query.filter_by(user_id = session_id).all()
-        grades=[]
-        class_id=[]
-        stud_class=[]
-        for enroll in user_id:
-            class_id.append(enroll.class_id)
-            grades.append(enroll.enrolled) 
-        for i,clas in enumerate(class_id):
-            c=Classes.query.filter_by(id=clas).first()
-            teacher=User.query.filter_by(id=c.teacher_id).first()
-            teacher=teacher.name
-            cure_classes=classes(grades[i],teacher,c.name,c.enrolled,c.maxenrolled)
-            stud_class.append(cure_classes)
         return render_template("student.html")
+
+@app.route('/student/data')
+def return_data():
+    session_id = session['user_id']
+    user_id = Enroll.query.filter_by(user_id = session_id).all()
+    grades=[]
+    class_id=[]
+    stud_class=[]
+    for enroll in user_id:
+        class_id.append(enroll.class_id)
+        grades.append(enroll.enrolled) 
+    for i,clas in enumerate(class_id):
+        c=Classes.query.filter_by(id=clas).first()
+        teacher=User.query.filter_by(id=c.teacher_id).first()
+        teacher=teacher.name
+        cure_classes= [{'grades': grades[i]},{'teacher': teacher},{'class_name':  c.name},{'enrolled': c.enrolled},{'max_enrolled': c.maxenrolled}]
+        stud_class.append(cure_classes)
+        
+    return jsonify(stud_class)
+
+
+    
 
 @app.route('/teacher',methods=['GET'])
 def teacher():
