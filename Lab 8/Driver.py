@@ -28,15 +28,15 @@ class User(UserMixin,db.Model):
         return self.password == password
 class Classes(db.Model):
     id=db.Column(db.Integer,primary_key=True)
-    teacher_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
+    teacher_id = db.Column(db.Integer)
     name= db.Column(db.String(30))
     enrolled=db.Column(db.Integer)
     maxenrolled=db.Column(db.Integer)
     type = db.Column(db.Integer, nullable = False)
 class Enroll(db.Model):
     id=db.Column(db.Integer,primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
-    class_id = db.Column(db.Integer, db.ForeignKey('classes.id'),nullable=False)
+    user_id = db.Column(db.Integer)
+    class_id = db.Column(db.Integer)
     enrolled=db.Column(db.Integer)
 
 @login.user_loader
