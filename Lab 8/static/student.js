@@ -24,9 +24,7 @@ const logout = async () => {
 	//const myJson = await response.json();
 };
 
-const add  = async () => {
-	
-};
+const add = async () => {};
 
 const populateEnrolled = async () => {
 	const response = await fetch(URI + "student/data");
@@ -39,7 +37,7 @@ const populateEnrolled = async () => {
 		teacherName = element[1].teacher;
 		courseName = element[2].class_name;
 		stuEnrolled = element[3].enrolled + "/" + element[4].max_enrolled;
-        classTime = element[5].time;
+		classTime = element[5].time;
 
 		globalCourses.newCourse(
 			element[1].teacher,
@@ -47,8 +45,8 @@ const populateEnrolled = async () => {
 			element[3].enrolled + "/" + element[4].max_enrolled,
 			element[5].time,
 			element[0].grades,
-            1,
-            (element[3].enrolled == element[4].max_enrolled)
+			1,
+			element[3].enrolled == element[4].max_enrolled
 		);
 
 		$("#classEnrolled tr:last").after(
@@ -77,66 +75,83 @@ const populateCourses = async () => {
 		// console.log(element)
 
 		//check if global student courses already contains ths if not add else skip
-		if (!globalCourses.checkEnrolled(element[1].class_name) && !(element[2].enrolled == element[3].max_enrolled)) {
-            console.log(
-				globalCourses.newCourse(
-					element[0].teacher,
-					element[1].class_name,
-					element[2].enrolled + "/" + element[3].max_enrolled,
-					element[4].time,
-					-1,
-                    0,
-                    (element[2].enrolled == element[3].max_enrolled)
-				)
-			);
-			$("#addCourses tr:last").after(
-				"<tr><td>" +
-					element[1].class_name +
-					"</td><td>" +
-					element[0].teacher +
-					"</td><td>" +
-					element[4].time +
-					"</td><td>" +
-					element[2].enrolled +
-					"/" +
-					element[3].max_enrolled +
-					"</td><td>" +
-					"<button class='edit-button' onclick='add()'> add </button>" +
-					"</td></tr>"
-			);
-		} else if((element[2].enrolled == element[3].max_enrolled)){
-			$("#addCourses tr:last").after(
-				"<tr><td>" +
-					element[1].class_name +
-					"</td><td>" +
-					element[0].teacher +
-					"</td><td>" +
-					element[4].time +
-					"</td><td>" +
-					element[2].enrolled +
-					"/" +
-					element[3].max_enrolled +
-					"</td><td>" +
-					"<button class='edit-button' onclick='add()'  disabled> full </button>" +
-					"</td></tr>"
-			);
-		} else {
-			$("#addCourses tr:last").after(
-				"<tr><td>" +
-					element[1].class_name +
-					"</td><td>" +
-					element[0].teacher +
-					"</td><td>" +
-					element[4].time +
-					"</td><td>" +
-					element[2].enrolled +
-					"/" +
-					element[3].max_enrolled +
-					"</td><td>" +
-					"<button class='edit-button' onclick='add()'> delete </button>" +
-					"</td></tr>"
-			);
-		}
+        if (element[2].enrolled == element[3].max_enrolled) {
+            if (globalCourses.checkEnrolled(element[1].class_name)) {
+                console.log(
+                    globalCourses.newCourse(
+                        element[0].teacher,
+                        element[1].class_name,
+                        element[2].enrolled + "/" + element[3].max_enrolled,
+                        element[4].time,
+                        -1,
+                        0,
+                        element[2].enrolled == element[3].max_enrolled
+                    )
+                );
+                $("#addCourses tr:last").after(
+                    "<tr><td>" +
+                    element[1].class_name +
+                    "</td><td>" +
+                    element[0].teacher +
+                    "</td><td>" +
+                    element[4].time +
+                    "</td><td>" +
+                    element[2].enrolled +
+                    "/" +
+                    element[3].max_enrolled +
+                    "</td><td>" +
+                    "<button class='edit-button' onclick='add()'> delete </button>" +
+                    "</td></tr>"
+                );
+            } else {
+                $("#addCourses tr:last").after(
+                    "<tr><td>" +
+                    element[1].class_name +
+                    "</td><td>" +
+                    element[0].teacher +
+                    "</td><td>" +
+                    element[4].time +
+                    "</td><td>" +
+                    element[2].enrolled +
+                    "/" +
+                    element[3].max_enrolled +
+                    "</td><td>" +
+                    "<button class='edit-button' onclick='add()' disabled> full </button>" +
+                    "</td></tr>"
+                );
+            }
+        } else if (!globalCourses.checkEnrolled(element[1].class_name)) {
+            $("#addCourses tr:last").after(
+                "<tr><td>" +
+                element[1].class_name +
+                "</td><td>" +
+                element[0].teacher +
+                "</td><td>" +
+                element[4].time +
+                "</td><td>" +
+                element[2].enrolled +
+                "/" +
+                element[3].max_enrolled +
+                "</td><td>" +
+                "<button class='edit-button' onclick='add()'  > add </button>" +
+                "</td></tr>"
+            );
+        } else {
+            $("#addCourses tr:last").after(
+                "<tr><td>" +
+                element[1].class_name +
+                "</td><td>" +
+                element[0].teacher +
+                "</td><td>" +
+                element[4].time +
+                "</td><td>" +
+                element[2].enrolled +
+                "/" +
+                element[3].max_enrolled +
+                "</td><td>" +
+                "<button class='edit-button' onclick='add()'> delete </button>" +
+                "</td></tr>");
+        }
 	}
 };
 
@@ -165,13 +180,15 @@ class Courses {
 		this.courses.push(course);
 		return course;
 	}
-    checkEnrolled(name) {
-        for (let index = 0; index < this.courses.length; index++) {
-           
-            if (name == this.courses[index].courseName && this.courses[index].full) {
-                console.log(this.courses[index].full);
-                return true
-            }
+	checkEnrolled(name) {
+		for (let index = 0; index < this.courses.length; index++) {
+			if (
+				name == this.courses[index].courseName &&
+				this.courses[index].full
+			) {
+				console.log(this.courses[index].full);
+				return true;
+			}
 			if (
 				name == this.courses[index].courseName &&
 				this.courses[index].enrolled
@@ -180,7 +197,7 @@ class Courses {
 				return true;
 			}
 		}
-    }
+	}
 }
 
 class Course {
