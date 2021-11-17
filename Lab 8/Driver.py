@@ -33,6 +33,7 @@ class Classes(db.Model):
     enrolled=db.Column(db.Integer)
     maxenrolled=db.Column(db.Integer)
     type = db.Column(db.Integer, nullable = False)
+    date=db.Column(db.String(30))
 class Enroll(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     user_id = db.Column(db.Integer)
@@ -111,7 +112,7 @@ def return_data():
         teacher=User.query.filter_by(id=c.teacher_id).first()
         teacher=teacher.name
         cure_classes= [{'grades': grades[i]},{'teacher': teacher},{'class_name':  c.name},{'enrolled': c.enrolled},{'max_enrolled': c.maxenrolled}]
-        stud_class.append(cure_classes)
+        stud_class.append(cure_classes)     
         
     return jsonify(stud_class)
 

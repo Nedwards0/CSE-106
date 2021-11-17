@@ -18,7 +18,7 @@ function openPage(pageName, elmnt, color) {
 // Get the element with id="defaultOpen" and click on it
 document.getElementById("defaultOpen").click();
 const test = async () => {
-    const response = await fetch(URI + "teacher/3");
+    const response = await fetch(URI + "teacher/classes");
 		const myJson = await response.json();
 
 		console.log(myJson);
