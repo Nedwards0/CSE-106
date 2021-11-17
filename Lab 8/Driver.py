@@ -192,7 +192,42 @@ def teacher():
         users=Classes.query.filter_by(teacher_id=session['user_id']).all()
 
         return render_template("teacher.html",users=users)
+class temp():
+    grade=0
+    name=0
+    id=0
+    clas=0
+    def __init__(self,grade,name,id,clas):
+        self.grade=grade
+        self.name=name
+        self.id=id
+        self.clas=clas
+@app.route('/teacher/setter/<student>/<class_id>')
+def set(student,class_id):
+    grade=request.args.get("grade")
+    print(student,class_id,grade)
+    student=int(student)
+    a=Enroll.query.filter_by(user_id=student)
+    for k in a:
+        if k.class_id==int(class_id):
+            print(k.enrolled)
+            print(k)
+            break
+    enroll=Enroll.query.get(k.id)
+    enroll.enrolled=int(grade)
+    db.session.commit()
+    return redirect('/teacher')
+@app.route('/teacher/all/<class_id>')
+def all(class_id):
+    print(class_id)
+    a=Enroll.query.filter_by(class_id=class_id)
+    users=[]
+    for c in a:
+        user_id=c.user_id
+        j=User.query.filter_by(id=user_id).first()
+        users.append(temp(c.enrolled,j.name,j.id,c.class_id))
 
+    return render_template("all.html",users=users)
 @app.route('/logout', methods=['GET'])
 @login_required
 def logout():

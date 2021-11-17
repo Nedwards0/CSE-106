@@ -18,7 +18,9 @@
           <td>{{ user.date }}</td>
           <td>{{ user.enrolled }}</td>
           <td>{{ user.maxenrolled }}</td>
-          <td>IDK WHAT GOES HERE</td>
+          <td>
+            <button onclick="location.href = 'teacher/all/{{user.id}}';" id="myButton" class="float-left submit-button" >Edit</button>
+          </td>
         </tr>
       {% endfor %}
     </tbody>
