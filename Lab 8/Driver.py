@@ -130,6 +130,11 @@ def return_data():
         
     return jsonify(stud_class)
 
+@app.route('/student/classes')
+def all_classes():
+
+    return jsonify(data)
+
 
     
 
