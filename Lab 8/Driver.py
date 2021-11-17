@@ -189,7 +189,9 @@ def proff_classez(class_id):
 @app.route('/teacher',methods=['GET'])
 def teacher():
     if(request.method=='GET'):
-        return render_template("teacher.html")
+        users=Classes.query.filter_by(teacher_id=session['user_id']).all()
+
+        return render_template("teacher.html",users=users)
 
 @app.route('/logout', methods=['GET'])
 @login_required

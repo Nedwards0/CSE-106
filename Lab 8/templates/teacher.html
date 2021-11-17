@@ -1,39 +1,31 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="../static/tSheats.css">
-    <title>studentCourses</title>
-</head>
-<body>
-  <h1>UC Merced</h1>
-  <div class="topleft">Welcome Professor!</div>
-  <button class="float-button" onclick="logout()"> Logout </button>
-  <button class="tablink" onclick="openPage('Courses', this, 'Blue')"id="defaultOpen">Student Courses</button>
-  <div id="Courses" class="tabcontent">
-    <table>
+{% extends "base.html" %}
+
+{% block content %}
+  <table id="data" class="table table-striped">
+    <thead>
       <tr>
-        <th>Course Name</th>
-        <th>Teacher</th>
+        <th>Name</th>
         <th>Time</th>
-        <th>Students Enrolled</th>
+        <th>Enrolled</th>
+        <th>Max_Enroll</th>
+        <th>EDIT</th>
       </tr>
-      <tr>
-        <td><p><a href="NEED TO IMPLEMENT GOING TO STUDENT GRADES">CSE 106</a></p></td>
-        <td>Ammon Hepworth</td>
-        <td>12:00pm</td>
-        <td>5/10</td>
-      </tr>
-      <tr>
-        <td><p><a href="NEED TO IMPLEMENT GOING TO STUDENT GRADES">CSE 120</a></p></td>
-        <td>Ammon Hepworth</td>
-        <td>1:30pm</td>
-        <td>8/16</td>
-      </tr>
-    </table>
-  </div>
-  <script src="../static/teacher.js"></script>
-</body>
-</html>
+    </thead>
+    <tbody>
+      {% for user in users %}
+        <tr>
+          <td>{{ user.name }}</td>
+          <td>{{ user.date }}</td>
+          <td>{{ user.enrolled }}</td>
+          <td>{{ user.maxenrolled }}</td>
+          <td>
+            <form>  
+              <input type="submit" value="Submit">
+            </form>
+
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
