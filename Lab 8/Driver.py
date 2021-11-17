@@ -157,7 +157,7 @@ def proff_classe(class_id):
 @app.route('/student/g/<class_id>')
 def add_todb(class_id):
     c=Enroll.query.filter_by(name=class_id).first()
-    class_id=c.class_id
+    class_id=c.class_id 
     enroll=Enroll(user_id=session['user_id'],class_id=class_id)
     db.session.add(enroll)
     db.session.commit()
