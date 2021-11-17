@@ -1,0 +1,46 @@
+* {
+    box-sizing: border-box;
+    font-family: Georgia, sans-serif;
+    font-weight: normal;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    background-color: rgba(199, 199, 199, 0.486);
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    min-height: 100vh;
+    min-width: 100vw;
+}
+
+.form {
+    margin-top: 25px;
+    width: 250px;
+    height: 400px;
+    background-color: rgba(104, 220, 255, 0.486);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.logo{
+    
+}
+
+.logo-main{
+    width: 250px;
+}
+
+.field{
+   padding-left: 55px;
+}
+
+.label{
+    
+}
