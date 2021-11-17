@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/../templates/tSheats.css">
+    <title>studentCourses</title>
+</head>
+<body>
+  <h1>UC Merced</h1>
+  <div class="topleft">Welcome Professor!</div>
+  <form align="right" name="form1" method="post" action="templates/login.html">
+    <label class="logoutLblPos">
+    <input name="submit2" type="submit" id="submit2" value="log out">
+    </label>
+  </form>
+  <button class="tablink" onclick="openPage('Courses', this, 'Blue')"id="defaultOpen">Student Courses</button>
+  <div id="Courses" class="tabcontent">
+    <table>
+      <tr>
+        <th>Course Name</th>
+        <th>Teacher</th>
+        <th>Time</th>
+        <th>Students Enrolled</th>
+      </tr>
+      <tr>
+        <td><p><a href="NEED TO IMPLEMENT GOING TO STUDENT GRADES">CSE 106</a></p></td>
+        <td>Ammon Hepworth</td>
+        <td>12:00pm</td>
+        <td>5/10</td>
+      </tr>
+      <tr>
+        <td><p><a href="NEED TO IMPLEMENT GOING TO STUDENT GRADES">CSE 120</a></p></td>
+        <td>Ammon Hepworth</td>
+        <td>1:30pm</td>
+        <td>8/16</td>
+      </tr>
+    </table>
+  </div>
+  <script src="/../templates/teacher.js"></script>
+</body>
+</html>

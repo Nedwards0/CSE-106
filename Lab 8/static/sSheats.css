@@ -1,0 +1,75 @@
+/* Title */
+h1 {text-align: center;}
+p {text-align: center;}
+div {text-align: center;}
+
+/* Welcome student */
+.topleft {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+  font-size: 18px;
+}
+
+/* Logout button */
+.logoutLblPos{
+  position:fixed;
+  right:10px;
+  top:5px;
+}
+
+/* Set height of body and the document to 100% to enable "full page tabs" */
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
+}
+  
+/* Style tab links */
+.tablink {
+  background-color: rgb(13, 84, 150);
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 50%;
+}
+
+.tablink:hover {
+  background-color: rgb(21, 92, 185);
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  color: white;
+  display: none;
+  padding: 100px 20px;
+  height: 100%;
+}
+
+#Courses {background-color: rgb(13, 139, 197);}
+#addCourses {background-color: rgb(13, 139, 197);}
+
+/* Courses Table */
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #000000;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #5a6363;
+}
+
+tr:nth-child(odd) {
+  background-color: #3f4240;
+}
