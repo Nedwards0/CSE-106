@@ -100,6 +100,12 @@ def teacher():
     if(request.method=='GET'):
         return render_template("teacher.html")
 
+@app.route('/logout', methods=['POST'])
+@ login_required
+def logout():
+    logout_user()
+    return render_template('login.html')
+
 if __name__ == '__main__':
     app.debug = True
 
