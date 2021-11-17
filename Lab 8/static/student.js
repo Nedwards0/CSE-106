@@ -18,13 +18,15 @@ function openPage(pageName, elmnt, color) {
 // Get the element with id="defaultOpen" and click on it
 document.getElementById("defaultOpen").click();
 
-const logout = async (class_id) => {
+const logout = async () => {
 	const response = await fetch(URI + "logout");
 	window.location.replace(URI + "login");
 	//const myJson = await response.json();
 };
 
-const add = async () => {};
+const add = async (class_name) => {
+    const response = await fetch(URI + "student/g/" + class_name);
+};
 
 const populateEnrolled = async () => {
 	const response = await fetch(URI + "student/data");
@@ -100,7 +102,7 @@ const populateCourses = async () => {
                     "/" +
                     element[3].max_enrolled +
                     "</td><td>" +
-                    "<button class='edit-button' onclick='add()'> delete </button>" +
+                    "<button class='edit-button' onclick='add(" + element[1].class_name + ")'> delete </button>" +
                     "</td></tr>"
                 );
             } else {
