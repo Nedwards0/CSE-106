@@ -73,3 +73,9 @@ tr:nth-child(even) {
 tr:nth-child(odd) {
   background-color: #3f4240;
 }
+
+.float-button {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+} 

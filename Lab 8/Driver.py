@@ -111,7 +111,7 @@ def return_data():
         c=Classes.query.filter_by(id=clas).first()
         teacher=User.query.filter_by(id=c.teacher_id).first()
         teacher=teacher.name
-        cure_classes= [{'grades': grades[i]},{'teacher': teacher},{'class_name':  c.name},{'enrolled': c.enrolled},{'max_enrolled': c.maxenrolled}]
+        cure_classes= [{'grades': grades[i]},{'teacher': teacher},{'class_name':  c.name},{'enrolled': c.enrolled},{'max_enrolled': c.maxenrolled},{'time':c.date}]
         stud_class.append(cure_classes)     
         
     return jsonify(stud_class)
@@ -124,7 +124,7 @@ def all_classes():
     for c in test:
         teacher=User.query.filter_by(id=c.teacher_id).first()
         teacher=teacher.name
-        a=[{'teacher': teacher},{'class_name':  c.name},{'enrolled': c.enrolled},{'max_enrolled': c.maxenrolled}]
+        a=[{'teacher': teacher},{'class_name':  c.name},{'enrolled': c.enrolled},{'max_enrolled': c.maxenrolled},{'time':c.date}]
         all_classes.append(a)
     return(jsonify(all_classes))
 
@@ -150,10 +150,14 @@ def proff_classe(class_id):
     a=[{'id':c.id},{'name':c.name},{'enrolled':c.enrolled},{'max':c.maxenrolled}]
     return (jsonify(a))
 
-
-
-
-
+#class add class to student 
+@app.route('/student/add_class/<string:class_id>')
+def proff_classe(class_id):
+    print(class_id)
+    c=Classes.query.get(class_id)
+    a=[{'id':c.id},{'name':c.name},{'enrolled':c.enrolled},{'max':c.maxenrolled}]
+    return (jsonify(a))
+    
     
 
 @app.route('/teacher',methods=['GET'])
