@@ -79,18 +79,26 @@ def login():
                 return redirect('admin')
             if(int(user.types)==2):
                 print("STUDENT")
-                return redirect("student")#NEEDS TO BE IMPLEMENTED
+                return redirect("/student")
             if(int(user.types)==3):
                 print("TEACHER")
-                return redirect("teacher")#NEEDS TO BE IMPLEMENTED
-            
-
+                return redirect("/teacher")
         else:
             print("FAIL")
     except:
         print("User does not exist")
     return render_template("login.html")
 
+
+@app.route('/student',methods=['GET'])
+def student():
+    if(request.method=='GET'):
+        return render_template("student.html")
+
+@app.route('/teacher',methods=['GET'])
+def teacher():
+    if(request.method=='GET'):
+        return render_template("teacher.html")
 
 if __name__ == '__main__':
     app.debug = True
