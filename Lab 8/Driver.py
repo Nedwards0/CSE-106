@@ -146,13 +146,18 @@ def proff_classes():
 @app.route('/teacher/<string:class_id>')
 def proff_classe(class_id):
     print(class_id)
-    c=Classes.query.get(class_id)
-    a=[{'id':c.id},{'name':c.name},{'enrolled':c.enrolled},{'max':c.maxenrolled}]
-    return (jsonify(a))
+    c=Enroll.query.filter_by(class_id=class_id).all()
+    outs=[]
+    for k in c:
+        id=k.user_id
+        user=User.query.get(id)
+        a=[{'stud_id':user.id},{'name':user.name},{"grade":k.enrolled},{"class_id":class_id}]
+        outs.append(a)
+    return (jsonify(outs))
 
 #class add class to student 
 @app.route('/student/add_class/<string:class_id>')
-def proff_classe(class_id):
+def proff_classez(class_id):
     print(class_id)
     c=Classes.query.get(class_id)
     a=[{'id':c.id},{'name':c.name},{'enrolled':c.enrolled},{'max':c.maxenrolled}]
